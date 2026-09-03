@@ -27,14 +27,13 @@ jobs:
           gradle-version: '8.9'
 
       - name: Make gradlew executable
-        run: chmod +x MarkazutTaqwaApp/gradlew
+        run: chmod +x gradlew
 
       - name: Build APK
-        working-directory: MarkazutTaqwaApp
         run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MarkazutTaqwa-APK
-          path: MarkazutTaqwaApp/app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
