@@ -32,19 +32,19 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Build APK without gradlew
+      - name: Generate Gradlew Wrapper and Build
         run: |
           PROJ_DIR=$(find . -maxdepth 3 -name "settings.gradle*" -exec dirname {} \; | head -n 1)
           if [ -z "$PROJ_DIR" ]; then
             PROJ_DIR=$(find . -maxdepth 3 -name "build.gradle*" -exec dirname {} \; | head -n 1)
           fi
-          echo "Building in directory: $PROJ_DIR"
           cd "$PROJ_DIR"
-          gradle assembleDebug --stacktrace --info --no-daemon
+          gradle wrapper
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MarkazutTaqwa-APK
           path: '**/build/outputs/apk/debug/*.apk'
-
